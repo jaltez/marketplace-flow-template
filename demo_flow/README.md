@@ -1,64 +1,49 @@
-# Flow - Marketplace Template
-
-Welcome to the Flow project template, designed for the [crewAI Marketplace](https://marketplace.crewai.com). This template provides a standardized structure for creating and sharing powerful multi-agent AI systems that others can easily install and use.
+# [Your Flow Name] - CrewAI Flow
 
 ## 🚀 Overview
 
-This template serves as a foundation for building marketplace-ready flows that:
+[Provide a concise description of what your flow does and the problem it solves. 2-3 sentences maximum.]
 
-- Are easily installable with minimal setup
-- Follow best practices for crewAI implementations
-- Include comprehensive documentation
-- Can be seamlessly distributed through the marketplace
+This flow enables users to [primary function/capability] by leveraging a team of specialized AI agents that collaborate to [key benefit/outcome].
 
-Approved templates will be featured in the CrewAI enterprise app, giving your creation visibility to enterprise users and the broader CrewAI community.
+## ✨ Key Features
 
-## 🔧 Installation
+- **[Feature 1]**: [Brief description of how this feature works and its benefit]
+- **[Feature 2]**: [Brief description of how this feature works and its benefit]
+- **[Feature 3]**: [Brief description of how this feature works and its benefit]
 
-This project uses [UV](https://docs.astral.sh/uv/) for dependency management, offering a seamless setup experience.
+## 🔍 Use Cases
 
-1. Install UV if you haven't already:
-   ```bash
-   pip install uv
-   ```
+This flow is ideal for:
 
-2. Install dependencies using the CrewAI CLI:
-   ```bash
-   crewai install
-   ```
+- [Use case]
 
-### Advanced Customization
+## 🛠️ Requirements
 
-- **LLM Flexibility**: Use any supported LLM provider (OpenAI, Anthropic, etc.)
-- **Custom Tools**: Create specialized tools for your agents
-- **API Integration**: Connect to external services and data sources
-- **Unique Workflows**: Design distinctive multi-agent systems that solve real problems
+- CrewAI version: [minimum version required]
+- API Keys needed:
+  - [API Service 1]: [Instructions for obtaining]
+  - [API Service 2]: [Instructions for obtaining]
+- Additional dependencies: [List any additional dependencies]
 
-### Marketplace Submission Guidelines
+## 📊 Example Output
 
-When preparing your flow template for marketplace submission:
+[Include a brief description of what the output looks like. If appropriate, include a screenshot or example of the output.]
 
-1. Ensure your README clearly explains what your flow does and what problem it solves
-2. Include detailed instructions for any required API keys or additional setup
-3. Provide examples of expected outputs or use cases
-4. Test your flow thoroughly before submission
-5. Consider adding screenshots or diagrams to illustrate your flow's workflow
-6. Document any custom tools or specific LLM requirements
-
-## Running Your Template
-
-To test your flow and verify it works as expected:
-
-```bash
-crewai flow kickoff
 ```
-## Support
+[Sample output format or example result]
+```
 
-For support, questions, or feedback regarding marketplace template development:
+## 📚 Resources and References
 
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+- [Link to relevant documentation or resources]
+- [Link to related projects or inspiration]
+- [Link to your personal website/GitHub/social media]
 
-Create powerful agent flows and share them with the world through the [crewAI marketplace](https://marketplace.crewai.com)!
+## 🤝 Contributing
+
+[Optional: Include information about how others can contribute to your flow]
+
+## 📝 License
+
+[Specify the license for your flow]
