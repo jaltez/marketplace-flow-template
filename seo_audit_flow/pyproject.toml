@@ -1,17 +1,16 @@
 [project]
-name = "demo_flow"
+name = "seo_audit_flow"
 version = "0.1.0"
-description = "demo-flow using crewAI"
+description = "seo_audit_flow using crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "crewai[tools]>=0.108.0,<1.0.0",
+    "crewai[tools]>=0.100.0,<1.0.0",
 ]
 
 [project.scripts]
-kickoff = "demo_flow.main:kickoff"
-run_crew = "demo_flow.main:kickoff"
-plot = "demo_flow.main:plot"
+kickoff = "seo_audit_flow.main:kickoff"
+plot = "seo_audit_flow.main:plot"
 
 [build-system]
 requires = ["hatchling"]
