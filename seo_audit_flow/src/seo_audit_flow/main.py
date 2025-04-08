@@ -1,52 +1,53 @@
 #!/usr/bin/env python
-from random import randint
-
+import os
 from pydantic import BaseModel
 
 from crewai.flow import Flow, listen, start
+from seo_audit_flow.crews.seo_crew.seo_crew import SeoCrew
 
-from seo_audit_flow.crews.poem_crew.poem_crew import PoemCrew
+class SeoAuditState(BaseModel):
+    url: str = ""
+    audit_report: str = ""
 
-
-class PoemState(BaseModel):
-    sentence_count: int = 1
-    poem: str = ""
-
-
-class PoemFlow(Flow[PoemState]):
+class SeoAuditFlow(Flow[SeoAuditState]):
 
     @start()
-    def generate_sentence_count(self):
-        print("Generating sentence count")
-        self.state.sentence_count = randint(1, 5)
+    def run_seo_audit(self):
+        print("Running SEO audit for ", self.state.url)
 
-    @listen(generate_sentence_count)
-    def generate_poem(self):
-        print("Generating poem")
         result = (
-            PoemCrew()
+            SeoCrew()
             .crew()
-            .kickoff(inputs={"sentence_count": self.state.sentence_count})
+            .kickoff(inputs={"url": self.state.url})
         )
 
-        print("Poem generated", result.raw)
-        self.state.poem = result.raw
+        print("SEO audit completed")
+        self.state.audit_report = result.raw
 
-    @listen(generate_poem)
-    def save_poem(self):
-        print("Saving poem")
-        with open("poem.txt", "w") as f:
-            f.write(self.state.poem)
+    @listen(run_seo_audit)
+    def save_report(self):
+        print("Saving SEO audit report")
+        print(f"Report saved to seo_audit_report.md")
 
 
 def kickoff():
-    poem_flow = PoemFlow()
-    poem_flow.kickoff()
+    """Run the SEO audit flow with the provided URL or from environment variable."""
+
+    url = os.getenv("SEO_AUDIT_URL", "")
+        
+    if not url:
+        raise ValueError("URL is required")
+        
+    print(f"Starting SEO audit for: {url}")
+    seo_flow = SeoAuditFlow()
+    seo_flow.state.url = url
+    seo_flow.kickoff()
+    return seo_flow.state.audit_report
 
 
 def plot():
-    poem_flow = PoemFlow()
-    poem_flow.plot()
+    seo_flow = SeoAuditFlow()
+    seo_flow.plot()
 
 
 if __name__ == "__main__":

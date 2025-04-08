@@ -1,12 +1,10 @@
 [project]
 name = "seo_audit_flow"
 version = "0.1.0"
-description = "seo_audit_flow using crewAI"
-authors = [{ name = "Your Name", email = "you@example.com" }]
+description = "SEO Audit Flow for analyzing single webpages using CrewAI"
+authors = [{ name = "Javier Altez", email = "jaltez1@gmail.com" }]
 requires-python = ">=3.10,<3.13"
-dependencies = [
-    "crewai[tools]>=0.100.0,<1.0.0",
-]
+dependencies = ["crewai[tools]>=0.108.0,<1.0.0", "boto3>=1.35.0,<2.0.0"]
 
 [project.scripts]
 kickoff = "seo_audit_flow.main:kickoff"

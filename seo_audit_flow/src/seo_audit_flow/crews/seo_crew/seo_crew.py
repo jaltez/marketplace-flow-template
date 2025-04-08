@@ -1,62 +1,74 @@
-from crewai import Agent, Crew, Process, Task
+import os
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-
-# If you want to run a snippet of code before or after the crew starts, 
-# you can use the @before_kickoff and @after_kickoff decorators
-# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+from crewai_tools import ScrapeWebsiteTool
 
 @CrewBase
 class SeoCrew():
-	"""SeoCrew crew"""
+	"""SEO Audit Crew for analyzing a single webpage"""
 
-	# Learn more about YAML configuration files here:
-	# Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-	# Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
 
-	# If you would like to add tools to your agents, you can learn more about it here:
-	# https://docs.crewai.com/concepts/agents#agent-tools
+	def __init__(self):
+		"""Initialize with the URL to analyze"""
+
+		self.scrape_tool = ScrapeWebsiteTool()
+
 	@agent
-	def researcher(self) -> Agent:
+	def content_fetcher(self) -> Agent:
 		return Agent(
-			config=self.agents_config['researcher'],
+			config=self.agents_config['content_fetcher'],
+			tools=[self.scrape_tool],
 			verbose=True
 		)
 
 	@agent
-	def reporting_analyst(self) -> Agent:
+	def on_page_analyzer(self) -> Agent:
 		return Agent(
-			config=self.agents_config['reporting_analyst'],
+			config=self.agents_config['on_page_analyzer'],
 			verbose=True
 		)
 
-	# To learn more about structured task outputs, 
-	# task dependencies, and task callbacks, check out the documentation:
-	# https://docs.crewai.com/concepts/tasks#overview-of-a-task
-	@task
-	def research_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['research_task'],
+	@agent
+	def report_generator(self) -> Agent:
+		return Agent(
+			config=self.agents_config['report_generator'],
+			verbose=True
 		)
 
 	@task
-	def reporting_task(self) -> Task:
+	def fetch_content_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['reporting_task'],
-			output_file='report.md'
+			config=self.tasks_config['fetch_content_task'],
+		)
+
+	@task
+	def analyze_page_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['analyze_page_task'],
+		)
+
+	@task
+	def generate_report_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['generate_report_task'],
+			output_file='seo_audit_report.md'
 		)
 
 	@crew
 	def crew(self) -> Crew:
-		"""Creates the SeoCrew crew"""
-		# To learn how to add knowledge sources to your crew, check out the documentation:
-		# https://docs.crewai.com/concepts/knowledge#what-is-knowledge
+		"""Creates the SEO Audit crew"""
+
+		llm = LLM(
+			model=os.getenv("MODEL"),
+			base_url=os.getenv("API_BASE")
+		)
 
 		return Crew(
-			agents=self.agents, # Automatically created by the @agent decorator
-			tasks=self.tasks, # Automatically created by the @task decorator
+			agents=self.agents,
+			tasks=self.tasks,
 			process=Process.sequential,
+			llm=llm,
 			verbose=True,
-			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
 		)

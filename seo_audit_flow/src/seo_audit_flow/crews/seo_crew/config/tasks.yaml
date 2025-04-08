@@ -1,17 +1,36 @@
-research_task:
+fetch_content_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Fetch the HTML content of the webpage at URL: {url}
+    This content will be used for SEO analysis, so make sure to retrieve
+    the complete HTML source.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    The complete HTML source code of the target webpage.
+  agent: content_fetcher
 
-reporting_task:
+analyze_page_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Analyze the provided HTML content for key on-page SEO elements.
+    Specifically, check for:
+    1. The presence and content of the <title> tag
+    2. The presence and content of the <meta name="description"> tag
+    3. The presence and structure of heading tags (<h1> through <h6>)
+    4. Any other critical on-page SEO elements you identify
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A structured analysis of the on-page SEO elements found on the page,
+    including the title tag content, meta description content, and a list
+    of all heading tags with their hierarchy and content.
+  agent: on_page_analyzer
+
+generate_report_task:
+  description: >
+    Create a comprehensive SEO audit report based on the analysis provided.
+    The report should include:
+    1. An overview of the page's SEO status
+    2. Details about the title tag and meta description
+    3. Analysis of the heading structure
+    4. Recommendations for improvement
+  expected_output: >
+    A well-formatted markdown report summarizing the SEO audit findings
+    and providing actionable recommendations for improvement.
+  agent: report_generator
+  output_file: seo_audit_report.md
